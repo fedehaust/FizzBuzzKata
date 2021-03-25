@@ -1,4 +1,4 @@
-﻿using System;
+﻿using static System.Console;
 
 namespace FizzBuzz
 {
@@ -6,7 +6,8 @@ namespace FizzBuzz
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Game.GetPlayAnswers(1, 100).ForEach(x => WriteLine(x));
+            ReadKey();
         }
 
     }
