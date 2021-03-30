@@ -13,9 +13,8 @@ namespace FizzBuzz
             _handler = handler;
         }
         public List<string> GetPlayAnswers(int firstElement, int range)
-        {
-            var result = Enumerable.Range(firstElement, range).Select(x => _handler.HandleNumber(x)).ToList();
-            return result;
-        }
+            => Enumerable.Range(firstElement, range)
+                .Select(x => _handler.HandleNumber(x))
+                .ToList();
     }
 }

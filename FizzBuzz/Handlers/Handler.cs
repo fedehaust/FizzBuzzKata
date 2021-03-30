@@ -3,8 +3,8 @@
     public abstract class Handler : IHandler
 
     {
-        protected Handler nextHandler;
-        public Handler(Handler nextHandler)
+        protected IHandler nextHandler;
+        public Handler(IHandler nextHandler)
         {
             this.nextHandler = nextHandler;
         }

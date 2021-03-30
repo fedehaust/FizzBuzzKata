@@ -37,6 +37,7 @@ namespace FizzBuzz
                 (new DivisibleByFiveHandler(null))
                 )))
                 .GetPlayAnswers(1,100);
+
             sut.Where((currentValue, i) => (i + 1).IsDivisible(divisor))
                 .Should()
                 .OnlyContain(x => x.Contains(value));
@@ -54,6 +55,7 @@ namespace FizzBuzz
                 (new DivisibleByFiveHandler(null))
                 )))
                 .GetPlayAnswers(1,100);
+
             sut.Where((currentValue, i) => (i + 1).ContainsNumber(divisor))
                 .Should()
                 .OnlyContain(x => x.Contains(value));

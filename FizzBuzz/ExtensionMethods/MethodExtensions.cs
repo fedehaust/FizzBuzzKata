@@ -4,7 +4,7 @@ namespace FizzBuzz.ExtensionMethods
 {
     public static class MethodExtensions
     {
-        public static string ManageHandler(this (int, string) s, Handler nextHandler)
+        public static string ManageHandler(this (int, string) s, IHandler nextHandler)
             => nextHandler != null
                 ? nextHandler.HandleNumber(s.Item1, s.Item2)
                 : string.IsNullOrEmpty(s.Item2)
