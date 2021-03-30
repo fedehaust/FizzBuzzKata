@@ -7,6 +7,6 @@ namespace FizzBuzz.Handlers
         public ContainsThreeHandler(Handler nextHandler) : base(nextHandler) { }
 
         public override string HandleNumber(int input, string currentValue = "") =>
-            input.ContainsValue("3", currentValue, currentValue.PrependIfNotContains("Fizz")).ManageHandler(nextHandler);
+            input.ContainsValue(3, currentValue, currentValue.PrependIfNotContains("Fizz")).ManageHandler(nextHandler);
     }
 }

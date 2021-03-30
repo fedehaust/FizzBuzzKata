@@ -17,8 +17,8 @@ namespace FizzBuzz.ExtensionMethods
                     : (s, currentValue);
 
 
-        public static (int, string) ContainsValue(this int s, string divisor, string currentValue, string newValue)
-            => s.ToString().Contains(divisor)
+        public static (int, string) ContainsValue(this int s, int divisor, string currentValue, string newValue)
+            => s.ToString().Contains(divisor.ToString())
                 ? (s,
                     newValue)
                 : (s, currentValue);
