@@ -1,6 +1,6 @@
 ﻿namespace FizzBuzz
 {
-    public abstract class Handler
+    public abstract class Handler : IHandler
 
     {
         protected Handler nextHandler;

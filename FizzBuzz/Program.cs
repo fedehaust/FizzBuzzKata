@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using FizzBuzz.Handlers;
+using static System.Console;
 
 namespace FizzBuzz
 {
@@ -6,7 +7,8 @@ namespace FizzBuzz
     {
         static void Main(string[] args)
         {
-            Game.GetPlayAnswers(1, 100).ForEach(x => WriteLine(x));
+            new Game(new ContainsThreeHandler(new ContainsFiveHandler(new DivisibleByThreeHandler(new DivisibleByFiveHandler(null)))))
+                .GetPlayAnswers(1, 100).ForEach(x => WriteLine(x));
             ReadKey();
         }
 

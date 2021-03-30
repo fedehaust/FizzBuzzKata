@@ -1,8 +1,8 @@
 using FluentAssertions;
-using System.Collections.Generic;
 using Xunit;
 using FizzBuzz.ExtensionMethods;
 using System.Linq;
+using FizzBuzz.Handlers;
 
 namespace FizzBuzz
 {
@@ -30,7 +30,13 @@ namespace FizzBuzz
         [InlineData(15, "FizzBuzz")]
         public void When_Number_Divisible_by_Three_Or_Five_Or_Both_Should_Be_Fizz_Or_Buzz_Or_Both(int divisor, string value)
         {
-            var sut = Game.GetPlayAnswers(1,100);
+            var sut = new Game
+                (new ContainsFiveHandler
+                (new DivisibleByThreeHandler
+                (new ContainsThreeHandler
+                (new DivisibleByFiveHandler(null))
+                )))
+                .GetPlayAnswers(1,100);
             sut.Where((currentValue, i) => (i + 1).IsDivisible(divisor))
                 .Should()
                 .OnlyContain(x => x.Contains(value));
@@ -41,7 +47,13 @@ namespace FizzBuzz
         [InlineData(5, "Buzz")]
         public void When_Number_Contains_Three_Or_Five_Should_Be_Fizz_Or_Buzz(int divisor, string value)
         {
-            var sut = Game.GetPlayAnswers(1,100);
+            var sut = new Game
+                (new ContainsThreeHandler
+                (new ContainsFiveHandler
+                (new DivisibleByThreeHandler
+                (new DivisibleByFiveHandler(null))
+                )))
+                .GetPlayAnswers(1,100);
             sut.Where((currentValue, i) => (i + 1).ContainsNumber(divisor))
                 .Should()
                 .OnlyContain(x => x.Contains(value));

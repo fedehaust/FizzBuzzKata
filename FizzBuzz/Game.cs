@@ -6,10 +6,15 @@ namespace FizzBuzz
 {
     public class Game
     {
-        public static List<string> GetPlayAnswers(int firstElement, int range)
+        private readonly IHandler _handler;
+
+        public Game(IHandler handler)
         {
-            var pipeline = new ContainsThreeHandler(new ContainsFiveHandler(new DivisibleByThreeHandler(new DivisibleByFiveHandler(null))));
-            var result = Enumerable.Range(firstElement, range).Select(x => pipeline.HandleNumber(x)).ToList();
+            _handler = handler;
+        }
+        public List<string> GetPlayAnswers(int firstElement, int range)
+        {
+            var result = Enumerable.Range(firstElement, range).Select(x => _handler.HandleNumber(x)).ToList();
             return result;
         }
     }
