@@ -2,6 +2,7 @@
 {
     public interface IHandler
     {
-        string HandleNumber(int input, string currentValue = "");
+        string HandleNumber(int input);
+        string HandleNumber(NumberPipelineResult input);
     }
 }

@@ -3,12 +3,11 @@
     public abstract class Handler : IHandler
 
     {
-        protected IHandler nextHandler;
+        protected IHandler NextHandler;
         public Handler(IHandler nextHandler)
-        {
-            this.nextHandler = nextHandler;
-        }
-
-        public abstract string HandleNumber(int input, string currentValue = "");
+            => NextHandler = nextHandler;
+        public string HandleNumber(int input) =>
+            HandleNumber(new NumberPipelineResult { Input = input });
+        public abstract string HandleNumber(NumberPipelineResult input);
     }
 }

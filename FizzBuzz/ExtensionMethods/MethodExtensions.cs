@@ -4,35 +4,48 @@ namespace FizzBuzz.ExtensionMethods
 {
     public static class MethodExtensions
     {
-        public static string ManageHandler(this (int, string) s, IHandler nextHandler)
+        public static string ManageHandler(this NumberPipelineResult s, IHandler nextHandler)
             => nextHandler != null
-                ? nextHandler.HandleNumber(s.Item1, s.Item2)
-                : string.IsNullOrEmpty(s.Item2)
-                    ? s.Item1.ToString()
-                    : s.Item2;
+                ? nextHandler.HandleNumber(s)
+                : GetNumberPipelineResult(s);
 
-        public static (int, string) ManageDivisor(this int s, int divisor, string currentValue, string newValue)
-            => s.IsDivisible(divisor)
-                ? (s, newValue)
-                    : (s, currentValue);
+        private static string GetNumberPipelineResult(NumberPipelineResult s) =>
+            string.IsNullOrEmpty(s.NumberOrTextResult)
+                                ? s.Input.ToString()
+                                : s.NumberOrTextResult;
 
+        public static NumberPipelineResult VerifyIsDivisible(this NumberPipelineResult s, int divisor, Func<NumberPipelineResult> f)
+        {
+            return !s.Input.IsDivisible(divisor) ? s : f();
+        }
 
-        public static (int, string) ContainsValue(this int s, int divisor, string currentValue, string newValue)
-            => s.ToString().Contains(divisor.ToString())
-                ? (s,
-                    newValue)
-                : (s, currentValue);
+        public static NumberPipelineResult ContainsValue(this NumberPipelineResult s, int value, Func<NumberPipelineResult> f)
+        {
+            return !s.Input.ContainsNumber(value) ? s : f();
+        }
+
+        public static NumberPipelineResult IfNotContainsPrependValue(this NumberPipelineResult currentValue, string possibleValueToAdd)
+            => currentValue.NumberOrTextResult.Contains(possibleValueToAdd) ?
+            currentValue :
+            new NumberPipelineResult
+            {
+                Input = currentValue.Input,
+                NumberOrTextResult = $"{possibleValueToAdd}{currentValue.NumberOrTextResult}"
+            };
+
+        public static NumberPipelineResult IfNotContainsAppendValue(this NumberPipelineResult currentValue, string possibleValueToAdd)
+            => currentValue.NumberOrTextResult.Contains(possibleValueToAdd) ?
+            currentValue :
+            new NumberPipelineResult
+            {
+                Input = currentValue.Input,
+                NumberOrTextResult = $"{currentValue.NumberOrTextResult}{possibleValueToAdd}"
+            };
 
         public static bool ContainsNumber(this int i, int number)
             => i.ToString().Contains(number.ToString());
 
         public static bool IsDivisible(this int s, int divisor)
             => s % divisor == 0;
-
-        public static string PrependIfNotContains(this string currentValue, string valueToAdd)
-            => currentValue.Contains(valueToAdd) ? currentValue : $"{valueToAdd}{currentValue}";
-
-        public static string AppendIfNotContains(this string currentValue, string valueToAdd)
-            => currentValue.Contains(valueToAdd) ? currentValue : $"{currentValue}{valueToAdd}";
     }
 }

@@ -6,8 +6,8 @@ namespace FizzBuzz.Handlers
     {
         public ContainsFiveHandler(IHandler nextHandler) : base(nextHandler) { }
 
-        public override string HandleNumber(int input, string currentValue = "") =>
-            input.ContainsValue(5, currentValue, currentValue.AppendIfNotContains("Buzz"))
-            .ManageHandler(nextHandler);
+        public override string HandleNumber(NumberPipelineResult input) =>
+            input.ContainsValue(5, () => input.IfNotContainsAppendValue("Buzz"))
+            .ManageHandler(NextHandler);
     }
 }
