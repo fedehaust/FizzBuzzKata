@@ -5,11 +5,9 @@ namespace FizzBuzz.ExtensionMethods
     public static class MethodExtensions
     {
         public static string ManageHandler(this NumberPipelineResult s, IHandler nextHandler)
-            => nextHandler != null
-                ? nextHandler.HandleNumber(s)
-                : GetNumberPipelineResult(s);
+            => nextHandler.HandleNumber(s);
 
-        private static string GetNumberPipelineResult(NumberPipelineResult s) =>
+        public static string GetNumberPipelineResult(this NumberPipelineResult s) =>
             string.IsNullOrEmpty(s.NumberOrTextResult)
                                 ? s.Input.ToString()
                                 : s.NumberOrTextResult;

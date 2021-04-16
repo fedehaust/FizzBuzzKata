@@ -11,7 +11,8 @@ namespace FizzBuzz
                 (new ContainsThreeHandler
                 (new ContainsFiveHandler
                 (new DivisibleByThreeHandler
-                (new DivisibleByFiveHandler(null)))))
+                (new DivisibleByFiveHandler
+                (new FinalHandler())))))
                 .GetPlayAnswers(1, 100)
                 .ForEach(x => WriteLine(x));
             ReadKey();

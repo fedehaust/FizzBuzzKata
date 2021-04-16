@@ -1,8 +1,8 @@
-using FluentAssertions;
-using Xunit;
 using FizzBuzz.ExtensionMethods;
-using System.Linq;
 using FizzBuzz.Handlers;
+using FluentAssertions;
+using System.Linq;
+using Xunit;
 
 namespace FizzBuzz
 {
@@ -14,15 +14,16 @@ namespace FizzBuzz
         [InlineData(15, "FizzBuzz")]
         public void BeFizzOrBuzzOrBoth_WhenNumberISDivisibleByThreeOrFiveOrBoth(int divisor, string value)
         {
-                new Game
-                (new ContainsFiveHandler
-                (new DivisibleByThreeHandler
-                (new ContainsThreeHandler
-                (new DivisibleByFiveHandler(null))
-                )))
-                .GetPlayAnswers(1,100).Where((currentValue, i) => (i + 1).IsDivisible(divisor))
-                .Should()
-                .OnlyContain(x => x.Contains(value));
+            new Game
+            (new ContainsFiveHandler
+            (new DivisibleByThreeHandler
+            (new ContainsThreeHandler
+            (new DivisibleByFiveHandler
+            (new FinalHandler()))
+            )))
+            .GetPlayAnswers(1, 100).Where((currentValue, i) => (i + 1).IsDivisible(divisor))
+            .Should()
+            .OnlyContain(x => x.Contains(value));
         }
 
         [Theory]
@@ -30,16 +31,18 @@ namespace FizzBuzz
         [InlineData(5, "Buzz")]
         public void BeFizzOrBuzz_WhenNumberContainsThreeOrFive(int divisor, string value)
         {
-                new Game
-                (new ContainsThreeHandler
-                (new ContainsFiveHandler
-                (new DivisibleByThreeHandler
-                (new DivisibleByFiveHandler(null))
-                )))
-                .GetPlayAnswers(1,100)
-                .Where((currentValue, i) => (i + 1).ContainsNumber(divisor))
-                .Should()
-                .OnlyContain(x => x.Contains(value));
+            new Game
+            (new ContainsThreeHandler
+            (new ContainsFiveHandler
+            (new DivisibleByThreeHandler
+            (new DivisibleByFiveHandler
+            (new FinalHandler()))
+
+            )))
+            .GetPlayAnswers(1, 100)
+            .Where((currentValue, i) => (i + 1).ContainsNumber(divisor))
+            .Should()
+            .OnlyContain(x => x.Contains(value));
         }
     }
 }
